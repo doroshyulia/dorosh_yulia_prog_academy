@@ -14,8 +14,9 @@ class MyError(Exception):
 	
 	
 class DublicateError(Exception):
-	def __init__(self, student):
+	def __init__(self, student, group):
         self.student = student
+	self.group_name = group
 
     def __str__(self):
         return f'Sorry, but {self.student} has already enrolled in this group.'
@@ -50,9 +51,9 @@ class Group:
 
     def add_student(self, student):
         if student in self.students:
-			raise DublicateError(student, self.group_name)
-		if len(self.students) >= self.max_students:
-			raise MyError(self.max_students)
+		raise DublicateError(student, self.group_name)
+	if len(self.students) >= self.max_students:
+		raise MyError(self.max_students)
                 
         self.students.append(student)             
 
