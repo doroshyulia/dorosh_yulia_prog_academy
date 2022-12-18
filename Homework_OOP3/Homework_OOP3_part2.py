@@ -11,6 +11,14 @@ class MyError(Exception):
 
     def __str__(self):
         return f'Sorry, we already have {self.max_limit} students in this group.'
+	
+	
+class DublicateError(Exception):
+	def __init__(self, student):
+        self.student = student
+
+    def __str__(self):
+        return f'Sorry, but {self.student} has already enrolled in this group.'
 
 
 class Human:
@@ -41,10 +49,12 @@ class Group:
         self.max_students = max_students
 
     def add_student(self, student):
-        if student not in self.students and len(self.students) < self.max_students:
-            self.students.append(student)
-            if len(self.students) >= self.max_students:
-                raise MyError(self.max_students)
+        if student in self.students:
+			raise DublicateError(student, self.group_name)
+		if len(self.students) >= self.max_students:
+			raise MyError(self.max_students)
+                
+        self.students.append(student)             
 
     def remove_student(self, student):
         if student in self.students:
